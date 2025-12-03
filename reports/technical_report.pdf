@@ -1,0 +1,202 @@
+
+Technical Report: Healthcare Provider Fraud Detection System
+
+**Project: Medicare Fraud Detection Capstone**
+**Team: 
+Mohamed Osama 13007322
+Malak Khaled 13007685
+Bahy Hany 13001097
+Mohamed Wael 13002337
+
+---
+
+1. Executive Summary
+
+This project develops a machine learning system to identify fraudulent Medicare providers using aggregated beneficiary and claim-level data. The solution converts raw transactional datasets into provider-level behavioral profiles and applies multiple ML models to detect high-risk providers despite severe class imbalance (~9% fraud rate).
+
+The final tuned XGBoost model demonstrates strong performance on unseen data, achieving:
+
+* **Precision:** 63.79%
+* **Recall:** 73.27%
+* **F1-Score:** 68.20%
+* **ROC-AUC:** 96.79%
+* **PR-AUC:** 79.89%
+
+The model captures the majority of fraudulent providers while maintaining an acceptable investigation burden, making it suitable as an operational triage tool.
+
+---
+
+ 2. Problem Statement & Objectives
+
+2.1 Challenge
+
+Fraud cases form a small minority of providers, leading conventional models to favor the majority class and overlook fraudulent behavior. Additionally, the dataset spans multiple tables requiring careful consolidation.
+
+2.2 Objectives
+
+* Construct unified provider-level representations from heterogeneous datasets
+* Detect fraudulent vs legitimate providers
+* Address extreme class imbalance during training
+* Evaluate multiple ML models fairly
+* Minimize the financial and operational impact of investigative errors
+
+---
+
+ 3. Methodology
+
+3.1 Data Acquisition & Preparation
+
+Four Medicare datasets were used: Beneficiary, Inpatient, Outpatient, and Provider Labels.
+
+Key preparation steps:
+
+* Missing physician IDs encoded as “Unknown”
+* Invalid claim durations removed
+* Columns with no informative values discarded
+* Fraud ratio confirmed at ~9–10%
+
+ 3.2 Feature Engineering
+
+Since the target label is at provider level, all claim-level data was aggregated accordingly.
+
+Feature classes include:
+
+*Financial:** total reimbursements, average deductible, mean claim cost
+*Operational:** claim volume, inpatient/outpatient ratios
+*Diversity:** unique diagnosis codes, unique procedure codes
+*Beneficiary metrics:** chronic condition ratios, unique patient count
+
+Final dataset: 5410 providers × ~134 features
+
+3.3 Exploratory Analysis
+
+Findings included:
+
+* Fraudulent providers exhibit higher financial throughput and broader diagnosis diversity
+* Certain states show disproportionately high fraud rates
+* Temporal patterns indicate sustained high-volume billing among fraudulent providers
+
+---
+
+4. Modeling Approach
+
+4.1 Imbalance Handling
+
+Three imbalance strategies were tested:
+
+* Class weighting
+* SMOTE
+* SMOTE + Tomek Links
+
+4.2 Model Suite
+
+The following models were trained and evaluated:
+
+| Model                 | Purpose                                           |
+| --------------------- | ------------------------------------------------- |
+| Logistic Regression   | Baseline interpretability                         |
+| Decision Tree         | Simple tree-based benchmark                       |
+| Random Forest         | High variance reduction & stability               |
+| XGBoost (final model) | Non-linear learning, strong imbalance performance |
+
+4.3 Hyperparameter Tuning
+
+GridSearchCV (5-fold) was applied with F1-score as the optimization metric.
+
+Main tuned parameters:
+
+* Logistic Regression: **C grid**, balanced weights
+* Random Forest: **depth**, **estimators**, **splits**
+* XGBoost: **max_depth**, **learning_rate**, **n_estimators**, **scale_pos_weight**
+
+4.4 Validation Results
+
+XGBoost outperformed other models with the best balance of recall and PR-AUC.
+
+| Model               | Precision  | Recall     | F1         | ROC-AUC    | PR-AUC     |
+| ------------------- | ---------- | ---------- | ---------- | ---------- | ---------- |
+| Logistic Regression | 0.4309     | 0.8020     | 0.5606     | 0.9284     | 0.6300     |
+| Random Forest       | 0.4845     | 0.7723     | 0.5954     | 0.9281     | 0.5906     |
+| **XGBoost**         | **0.5897** | **0.6832** | **0.6330** | **0.9311** | **0.6534** |
+| Decision Tree       | 0.4312     | 0.6832     | 0.5287     | 0.7413     | 0.3694     |
+
+XGBoost achieved the highest combined performance score.
+
+---
+
+5. Final Evaluation (Test Set)
+
+The final XGBoost model was retrained on 80% of the dataset and tested on the remaining 20%.
+
+5.1 Performance Metrics
+
+| Metric    | Value  |
+| --------- | ------ |
+| Accuracy  | 93.63% |
+| Precision | 63.79% |
+| Recall    | 73.27% |
+| F1-Score  | 68.20% |
+| ROC-AUC   | 96.79% |
+| PR-AUC    | 79.89% |
+
+5.2 Confusion Matrix
+
+|            | Pred No | Pred Yes |
+| ---------- | ------- | -------- |
+| Actual No  | 940     | 42       |
+| Actual Yes | 27      | 74       |
+
+5.3 Interpretation
+
+* Strong recall ensures most fraudulent providers are captured
+* Precision is adequate to limit unnecessary investigations
+* High ROC-AUC and PR-AUC confirm effective ranking and minority-class discrimination
+
+---
+
+ 6. Business Impact Analysis
+
+Assumed costs:
+
+* **False Positive:** $1,000 investigation cost
+* **False Negative:** $50,000 estimated financial loss
+
+The model reduces overall financial exposure compared to random or threshold-agnostic auditing, while providing investigators with actionable prioritization.
+
+---
+
+7. Error Analysis
+
+7.1 False Positives
+
+Common traits:
+
+* Large providers with unusually high claim volumes
+* Patterns resembling high-revenue outliers
+
+These cases generally represent legitimate high-throughput institutions.
+
+7.2 False Negatives
+
+Missed fraud cases typically:
+
+* Display low-volume, low-visibility billing
+* Mimic patterns of legitimate small clinics
+
+Future enhancements could incorporate network-level analysis between providers and beneficiaries.
+
+---
+
+8. Key Feature Drivers
+
+Top contributing factors include:
+
+* Claim volume indicators
+* Total and mean reimbursement amounts
+* Diagnosis and procedure diversity
+* Beneficiary condition ratios
+
+These reflect realistic indicators of irregular billing behavior.
+
+---
+
