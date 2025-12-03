@@ -45,7 +45,7 @@ slide2 = prs.slides.add_slide(prs.slide_layouts[1])
 title2 = slide2.shapes.title
 content2 = slide2.placeholders[1]
 
-title2.text = "Slide 1 — The Problem & Our Objective\nBy Mohamed"
+title2.text = "Slide 1 — The Problem & Our Objective\n"
 title2.text_frame.paragraphs[0].font.size = Pt(28)
 
 tf2 = content2.text_frame
