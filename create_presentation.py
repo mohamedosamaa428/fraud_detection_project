@@ -75,7 +75,7 @@ slide3 = prs.slides.add_slide(prs.slide_layouts[1])
 title3 = slide3.shapes.title
 content3 = slide3.placeholders[1]
 
-title3.text = "Slide 2 — Data Architecture Overview (Phase 1)\nBy Malak"
+title3.text = "Slide 2 — Data Architecture Overview (Phase 1)"
 title3.text_frame.paragraphs[0].font.size = Pt(28)
 
 tf3 = content3.text_frame
@@ -125,7 +125,7 @@ slide4 = prs.slides.add_slide(prs.slide_layouts[1])
 title4 = slide4.shapes.title
 content4 = slide4.placeholders[1]
 
-title4.text = "Slide 3 — Data Cleaning Strategy\nBy Malak"
+title4.text = "Slide 3 — Data Cleaning Strategy"
 title4.text_frame.paragraphs[0].font.size = Pt(32)
 
 tf4 = content4.text_frame
@@ -168,7 +168,7 @@ slide5 = prs.slides.add_slide(prs.slide_layouts[1])
 title5 = slide5.shapes.title
 content5 = slide5.placeholders[1]
 
-title5.text = "Slide 4 — Feature Engineering\nBy Mohamed"
+title5.text = "Slide 4 — Feature Engineering"
 title5.text_frame.paragraphs[0].font.size = Pt(32)
 
 tf5 = content5.text_frame
@@ -201,7 +201,7 @@ slide6 = prs.slides.add_slide(prs.slide_layouts[1])
 title6 = slide6.shapes.title
 content6 = slide6.placeholders[1]
 
-title6.text = "Slide 5 — Exploratory Insights\nBy Mohamed"
+title6.text = "Slide 5 — Exploratory Insights"
 title6.text_frame.paragraphs[0].font.size = Pt(32)
 
 tf6 = content6.text_frame
@@ -225,7 +225,7 @@ slide7 = prs.slides.add_slide(prs.slide_layouts[1])
 title7 = slide7.shapes.title
 content7 = slide7.placeholders[1]
 
-title7.text = "Slide 6 — Handling Imbalance (Phase 2)\nBy Bahy"
+title7.text = "Slide 6 — Handling Imbalance (Phase 2)"
 title7.text_frame.paragraphs[0].font.size = Pt(28)
 
 tf7 = content7.text_frame
@@ -262,7 +262,7 @@ slide8 = prs.slides.add_slide(prs.slide_layouts[1])
 title8 = slide8.shapes.title
 content8 = slide8.placeholders[1]
 
-title8.text = "Slide 7 — Modeling Strategy (Phase 3)\nBy Bahy"
+title8.text = "Slide 7 — Modeling Strategy (Phase 3)"
 title8.text_frame.paragraphs[0].font.size = Pt(28)
 
 tf8 = content8.text_frame
@@ -297,7 +297,7 @@ slide9 = prs.slides.add_slide(prs.slide_layouts[1])
 title9 = slide9.shapes.title
 content9 = slide9.placeholders[1]
 
-title9.text = "Slide 8 — Model Selection Results\nBy Mohamed"
+title9.text = "Slide 8 — Model Selection Results"
 title9.text_frame.paragraphs[0].font.size = Pt(28)
 
 tf9 = content9.text_frame
@@ -323,7 +323,7 @@ slide10 = prs.slides.add_slide(prs.slide_layouts[1])
 title10 = slide10.shapes.title
 content10 = slide10.placeholders[1]
 
-title10.text = "Slide 9 — Final Test Evaluation (Phase 4)\nBy Aly"
+title10.text = "Slide 9 — Final Test Evaluation (Phase 4)"
 title10.text_frame.paragraphs[0].font.size = Pt(28)
 
 tf10 = content10.text_frame
@@ -374,7 +374,7 @@ slide11 = prs.slides.add_slide(prs.slide_layouts[1])
 title11 = slide11.shapes.title
 content11 = slide11.placeholders[1]
 
-title11.text = "Slide 10 — Business Impact\nBy Mohamed"
+title11.text = "Slide 10 — Business Impact"
 title11.text_frame.paragraphs[0].font.size = Pt(32)
 
 tf11 = content11.text_frame
@@ -406,7 +406,7 @@ slide12 = prs.slides.add_slide(prs.slide_layouts[1])
 title12 = slide12.shapes.title
 content12 = slide12.placeholders[1]
 
-title12.text = "Slide 11 — Error Analysis\nBy Bahy"
+title12.text = "Slide 11 — Error Analysis"
 title12.text_frame.paragraphs[0].font.size = Pt(32)
 
 tf12 = content12.text_frame
@@ -446,7 +446,7 @@ slide13 = prs.slides.add_slide(prs.slide_layouts[1])
 title13 = slide13.shapes.title
 content13 = slide13.placeholders[1]
 
-title13.text = "Slide 12 — Key Drivers of Risk\nBy Malak"
+title13.text = "Slide 12 — Key Drivers of Risk"
 title13.text_frame.paragraphs[0].font.size = Pt(32)
 
 tf13 = content13.text_frame
@@ -474,7 +474,7 @@ slide14 = prs.slides.add_slide(prs.slide_layouts[1])
 title14 = slide14.shapes.title
 content14 = slide14.placeholders[1]
 
-title14.text = "Slide 13 — Final Recommendations\nBy Mohamed"
+title14.text = "Slide 13 — Final Recommendations"
 title14.text_frame.paragraphs[0].font.size = Pt(28)
 
 tf14 = content14.text_frame
