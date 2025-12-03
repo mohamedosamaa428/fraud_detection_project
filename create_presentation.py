@@ -27,6 +27,44 @@ def set_text_frame_properties(tf, font_size=18):
             for run in paragraph.runs:
                 run.font.size = Pt(font_size - 4)
 
+def clear_subtitle_placeholders(slide):
+    """Clear any subtitle placeholders and ensure title doesn't contain 'By [Name]'"""
+    # Check all shapes on the slide
+    for shape in slide.shapes:
+        # Clear subtitle placeholders
+        if hasattr(shape, 'placeholder_format'):
+            try:
+                if shape.placeholder_format.type == 4:  # Subtitle placeholder type
+                    if shape.has_text_frame:
+                        shape.text_frame.clear()
+            except:
+                pass
+        
+        # Check all text frames for "By [Name]" and clear them
+        if hasattr(shape, 'has_text_frame') and shape.has_text_frame:
+            tf = shape.text_frame
+            # Check if this is the title - handle it specially
+            if shape == slide.shapes.title:
+                # Filter out "By" lines from title
+                title_text = tf.text
+                if title_text:
+                    lines = title_text.split('\n')
+                    clean_lines = [line for line in lines if not (line.strip().startswith('By ') or line.strip().lower().startswith('by '))]
+                    if clean_lines:
+                        tf.text = clean_lines[0]
+                        # Remove extra paragraphs
+                        while len(tf.paragraphs) > 1:
+                            try:
+                                p = tf.paragraphs[-1]
+                                p._element.getparent().remove(p._element)
+                            except:
+                                break
+            else:
+                # For non-title text frames, clear if they contain only "By [Name]"
+                text = tf.text.strip()
+                if text and (text.startswith('By ') or text.lower().startswith('by ')):
+                    tf.clear()
+
 # Slide 1: Title Slide
 slide1 = prs.slides.add_slide(prs.slide_layouts[0])
 title = slide1.shapes.title
@@ -47,6 +85,7 @@ content2 = slide2.placeholders[1]
 
 title2.text = "Slide 1 — The Problem & Our Objective"
 title2.text_frame.paragraphs[0].font.size = Pt(32)
+clear_subtitle_placeholders(slide2)
 
 tf2 = content2.text_frame
 tf2.text = "US healthcare fraud exceeds $68B/year"
@@ -77,6 +116,7 @@ content3 = slide3.placeholders[1]
 
 title3.text = "Slide 2 — Data Architecture Overview (Phase 1)"
 title3.text_frame.paragraphs[0].font.size = Pt(28)
+clear_subtitle_placeholders(slide3)
 
 tf3 = content3.text_frame
 tf3.text = "Inputs"
@@ -127,6 +167,7 @@ content4 = slide4.placeholders[1]
 
 title4.text = "Slide 3 — Data Cleaning Strategy"
 title4.text_frame.paragraphs[0].font.size = Pt(32)
+clear_subtitle_placeholders(slide4)
 
 tf4 = content4.text_frame
 tf4.text = "Problems Detected"
@@ -170,6 +211,7 @@ content5 = slide5.placeholders[1]
 
 title5.text = "Slide 4 — Feature Engineering"
 title5.text_frame.paragraphs[0].font.size = Pt(32)
+clear_subtitle_placeholders(slide5)
 
 tf5 = content5.text_frame
 tf5.text = "We convert millions of claims → provider behavioral vectors"
@@ -203,6 +245,7 @@ content6 = slide6.placeholders[1]
 
 title6.text = "Slide 5 — Exploratory Insights"
 title6.text_frame.paragraphs[0].font.size = Pt(32)
+clear_subtitle_placeholders(slide6)
 
 tf6 = content6.text_frame
 tf6.text = "Detected patterns:"
@@ -227,6 +270,7 @@ content7 = slide7.placeholders[1]
 
 title7.text = "Slide 6 — Handling Imbalance (Phase 2)"
 title7.text_frame.paragraphs[0].font.size = Pt(28)
+clear_subtitle_placeholders(slide7)
 
 tf7 = content7.text_frame
 tf7.text = "Issue: Fraud = minority → models default to \"No Fraud\""
@@ -264,6 +308,7 @@ content8 = slide8.placeholders[1]
 
 title8.text = "Slide 7 — Modeling Strategy (Phase 3)"
 title8.text_frame.paragraphs[0].font.size = Pt(28)
+clear_subtitle_placeholders(slide8)
 
 tf8 = content8.text_frame
 tf8.text = "Models:"
@@ -299,6 +344,7 @@ content9 = slide9.placeholders[1]
 
 title9.text = "Slide 8 — Model Selection Results"
 title9.text_frame.paragraphs[0].font.size = Pt(28)
+clear_subtitle_placeholders(slide9)
 
 tf9 = content9.text_frame
 tf9.text = "Model Comparison (Validation Set):"
@@ -325,6 +371,7 @@ content10 = slide10.placeholders[1]
 
 title10.text = "Slide 9 — Final Test Evaluation (Phase 4)"
 title10.text_frame.paragraphs[0].font.size = Pt(28)
+clear_subtitle_placeholders(slide10)
 
 tf10 = content10.text_frame
 tf10.text = "Test Results (20% unseen)"
@@ -376,6 +423,7 @@ content11 = slide11.placeholders[1]
 
 title11.text = "Slide 10 — Business Impact"
 title11.text_frame.paragraphs[0].font.size = Pt(32)
+clear_subtitle_placeholders(slide11)
 
 tf11 = content11.text_frame
 tf11.text = "Assumptions:"
@@ -408,6 +456,7 @@ content12 = slide12.placeholders[1]
 
 title12.text = "Slide 11 — Error Analysis"
 title12.text_frame.paragraphs[0].font.size = Pt(32)
+clear_subtitle_placeholders(slide12)
 
 tf12 = content12.text_frame
 tf12.text = "False Positives"
@@ -448,6 +497,7 @@ content13 = slide13.placeholders[1]
 
 title13.text = "Slide 12 — Key Drivers of Risk"
 title13.text_frame.paragraphs[0].font.size = Pt(32)
+clear_subtitle_placeholders(slide13)
 
 tf13 = content13.text_frame
 tf13.text = "Top influential signals:"
@@ -476,6 +526,7 @@ content14 = slide14.placeholders[1]
 
 title14.text = "Slide 13 — Final Recommendations"
 title14.text_frame.paragraphs[0].font.size = Pt(28)
+clear_subtitle_placeholders(slide14)
 
 tf14 = content14.text_frame
 tf14.text = "Deploy XGBoost for Medicare fraud triage"
